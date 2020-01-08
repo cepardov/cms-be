@@ -1,6 +1,7 @@
 package com.cepardov.cms.entity;
 
 import com.cepardov.cms.util.DateUtil;
+import com.cepardov.cms.validator.Rut;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
@@ -20,6 +21,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Rut
     @Size(min = 9, max = 12, message = "El tamaño debe estar entre 9 y 12")
     @Column(nullable = false, unique = true)
     private String socialId;
