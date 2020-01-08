@@ -1,5 +1,6 @@
 package com.cepardov.cms.entity;
 
+import com.cepardov.cms.util.DateUtil;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
@@ -8,7 +9,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Data
@@ -32,8 +33,7 @@ public class User {
     @Column(unique = true)
     private String email;
 
-    @Temporal(TemporalType.DATE)
-    private Date createAt;
+    private Timestamp createAt;
 
     @JsonIgnoreProperties(value={"user", "hibernateLazyInitializer", "handler"})
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
@@ -42,6 +42,6 @@ public class User {
 
     @PrePersist
     public void prePersist() {
-        this.createAt = new Date();
+        this.createAt = new DateUtil().getDateTimeFromNtpServer();
     }
 }

@@ -14,7 +14,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig {// NUEVO PARA CONSULTA SALDO 20191224
+public class SwaggerConfig {
 
     @Value("${app.production}")
     private boolean isProd;

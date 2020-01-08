@@ -1,11 +1,12 @@
 package com.cepardov.cms.entity;
 
+import com.cepardov.cms.util.DateUtil;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Data
@@ -25,8 +26,7 @@ public class Notice {
 
     private String defaultImage;
 
-    @Temporal(TemporalType.DATE)
-    private Date createAt;
+    private Timestamp createAt;
 
     @JsonIgnoreProperties(value={"notice", "hibernateLazyInitializer", "handler"})
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "notice", cascade = CascadeType.ALL)
@@ -46,6 +46,6 @@ public class Notice {
 
     @PrePersist
     public void prePersist() {
-        this.createAt = new Date();
+        this.createAt = new DateUtil().getDateTimeFromNtpServer();
     }
 }

@@ -1,11 +1,12 @@
 package com.cepardov.cms.entity;
 
+import com.cepardov.cms.util.DateUtil;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.sql.Timestamp;
 
 @Data
 @Entity
@@ -22,8 +23,7 @@ public class Image {
 
     private String description;
 
-    @Temporal(TemporalType.DATE)
-    private Date createAt;
+    private Timestamp createAt;
 
     @JsonIgnoreProperties(value={"image", "hibernateLazyInitializer", "handler"}, allowSetters=true)
     @ManyToOne(fetch = FetchType.LAZY)
@@ -31,6 +31,6 @@ public class Image {
 
     @PrePersist
     public void prePersist() {
-        this.createAt = new Date();
+        this.createAt = new DateUtil().getDateTimeFromNtpServer();
     }
 }
