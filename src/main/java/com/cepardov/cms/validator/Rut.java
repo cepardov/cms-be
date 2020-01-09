@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = RutValidator.class)
 @Documented
 public @interface Rut {
-    String message() default "inválido";
+    String message() default "no es inválido";
 
     Class<?>[] groups() default {};
 

@@ -1,6 +1,6 @@
 package com.cepardov.cms.service;
 
-import com.cepardov.cms.entity.Notice;
+import com.cepardov.cms.entity.Post;
 import com.cepardov.cms.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +16,8 @@ public interface UserService {
     User update(User user);
     void delete(User user);
     void deleteById(Long id);
-    Notice findNoticeById(Long id);
-    Notice saveNotice(Notice notice);
-    void deleteNoticeById(Long id);
+    Post findPostById(Long id);
+    Post savePost(Post post);
+    Post updatePost(Post post);
+    void deletePostById(Long id);
 }

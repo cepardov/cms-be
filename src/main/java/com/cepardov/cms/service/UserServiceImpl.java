@@ -1,6 +1,6 @@
 package com.cepardov.cms.service;
 
-import com.cepardov.cms.entity.Notice;
+import com.cepardov.cms.entity.Post;
 import com.cepardov.cms.entity.User;
 import com.cepardov.cms.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository repository;
 
     @Autowired
-    private NoticeService noticeService;
+    private PostService postService;
 
     @Override
     @Transactional(readOnly = true)
@@ -64,19 +64,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public Notice findNoticeById(Long id) {
-        return noticeService.findById(id);
+    public Post findPostById(Long id) {
+        return postService.findById(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Notice saveNotice(Notice notice) {
-        return noticeService.save(notice);
+    public Post savePost(Post post) {
+        return postService.save(post);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteNoticeById(Long id) {
-        noticeService.deleteById(id);
+    public Post updatePost(Post post) {
+        return postService.save(post);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deletePostById(Long id) {
+        postService.deleteById(id);
     }
 }

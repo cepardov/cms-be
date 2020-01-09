@@ -1,6 +1,7 @@
 package com.cepardov.cms.entity;
 
 import com.cepardov.cms.util.DateUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
@@ -27,7 +28,7 @@ public class Audio {
 
     @JsonIgnoreProperties(value={"audio", "hibernateLazyInitializer", "handler"}, allowSetters=true)
     @ManyToOne(fetch = FetchType.LAZY)
-    private Notice notice;
+    private Post post;
 
     @PrePersist
     public void prePersist() {

@@ -1,8 +1,11 @@
 package com.cepardov.cms.entity;
 
 import com.cepardov.cms.util.DateUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,7 +14,7 @@ import java.util.List;
 
 @Data
 @Entity
-public class Notice {
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,19 +31,22 @@ public class Notice {
 
     private Timestamp createAt;
 
-    @JsonIgnoreProperties(value={"notice", "hibernateLazyInitializer", "handler"})
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "notice", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value={"post", "hibernateLazyInitializer", "handler"})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Audio> audios;
 
-    @JsonIgnoreProperties(value={"notice", "hibernateLazyInitializer", "handler"})
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "notice", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value={"post", "hibernateLazyInitializer", "handler"})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Image> images;
 
-    @JsonIgnoreProperties(value={"notice", "hibernateLazyInitializer", "handler"})
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "notice", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value={"post", "hibernateLazyInitializer", "handler"})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Video> videos;
 
-    @JsonIgnoreProperties(value={"notice", "hibernateLazyInitializer", "handler"}, allowSetters=true)
+    @JsonIgnoreProperties(value={"post", "hibernateLazyInitializer", "handler"}, allowSetters=true)
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
