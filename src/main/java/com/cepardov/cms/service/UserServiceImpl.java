@@ -17,9 +17,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository repository;
 
-    @Autowired
-    private PostService postService;
-
     @Override
     @Transactional(readOnly = true)
     public List<User> findAll() {
@@ -62,27 +59,4 @@ public class UserServiceImpl implements UserService {
         repository.deleteById(id);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Post findPostById(Long id) {
-        return postService.findById(id);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Post savePost(Post post) {
-        return postService.save(post);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Post updatePost(Post post) {
-        return postService.save(post);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void deletePostById(Long id) {
-        postService.deleteById(id);
-    }
 }

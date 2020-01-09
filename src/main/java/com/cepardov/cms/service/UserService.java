@@ -16,8 +16,4 @@ public interface UserService {
     User update(User user);
     void delete(User user);
     void deleteById(Long id);
-    Post findPostById(Long id);
-    Post savePost(Post post);
-    Post updatePost(Post post);
-    void deletePostById(Long id);
 }
