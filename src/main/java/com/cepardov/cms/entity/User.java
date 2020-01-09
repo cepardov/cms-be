@@ -2,7 +2,6 @@ package com.cepardov.cms.entity;
 
 import com.cepardov.cms.util.DateUtil;
 import com.cepardov.cms.validator.Rut;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
@@ -12,13 +11,14 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
 @Data
 @Entity
-public class User {
-
+public class User implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,6 +37,10 @@ public class User {
     @Email
     @Column(unique = true)
     private String email;
+
+    private String password;
+
+    private Boolean enabled;
 
     private Timestamp createAt;
 
