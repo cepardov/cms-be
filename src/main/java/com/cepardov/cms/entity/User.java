@@ -44,7 +44,7 @@ public class User implements Serializable {
     @Column(length = 60)
     private String password;
 
-    private Boolean enabled;
+    private Boolean enabled = false;
 
     private Timestamp createAt;
 

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,9 @@ public class UserController {
 
     @Autowired
     private UserService service;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping("/users")
     @TimeExecutionMeasuring
@@ -77,6 +81,9 @@ public class UserController {
         }
 
         try {
+            if(user.getPassword() == null) {
+                user.setPassword(passwordEncoder.encode(user.getSocialId()));
+            }
             userSaved = service.save(user);
         } catch (DataAccessException e){
             response.put("message", "Error al guardar el usuario, intente más tarde");
@@ -112,6 +119,11 @@ public class UserController {
             actualUser.setFirstName(user.getFirstName());
             actualUser.setLastName(user.getLastName());
             actualUser.setEmail(user.getEmail());
+            actualUser.setEnabled(user.getEnabled());
+            System.out.println("Pass:"+user.getPassword());
+            if(user.getPassword() != null){
+                actualUser.setPassword(passwordEncoder.encode(user.getPassword()));
+            }
 
             userUpdated = service.update(actualUser);
         } catch (DataAccessException e) {
