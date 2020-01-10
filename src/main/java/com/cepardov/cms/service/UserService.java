@@ -12,6 +12,7 @@ public interface UserService {
     List<User> findAll();
     Page<User> findAll(Pageable pageable);
     User findById(Long id);
+    User findByUsername(String username);
     User save(User user);
     User update(User user);
     void delete(User user);

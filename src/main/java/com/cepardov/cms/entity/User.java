@@ -34,10 +34,14 @@ public class User implements Serializable {
     @NotEmpty(message = "no puede estar vacío")
     private String lastName;
 
+    @Column(unique = true, nullable = false)
+    private String username;
+
     @Email
     @Column(unique = true)
     private String email;
 
+    @Column(length = 60)
     private String password;
 
     private Boolean enabled;
@@ -48,6 +52,12 @@ public class User implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private List<Post> posts;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name="user_role", joinColumns= @JoinColumn(name="user_id"),
+            inverseJoinColumns=@JoinColumn(name="role_id"),
+            uniqueConstraints= {@UniqueConstraint(columnNames= {"user_id", "role_id"})})
+    private List<Role> roles;
 
     @PrePersist
     public void prePersist() {
