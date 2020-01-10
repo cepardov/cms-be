@@ -1,6 +1,7 @@
 package com.cepardov.cms.service;
 
 import com.cepardov.cms.entity.Post;
+import com.cepardov.cms.entity.Role;
 import com.cepardov.cms.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,4 +18,6 @@ public interface UserService {
     User update(User user);
     void delete(User user);
     void deleteById(Long id);
+
+    void addRole(User user, Role role);
 }

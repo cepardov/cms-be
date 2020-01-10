@@ -1,6 +1,7 @@
 package com.cepardov.cms.service;
 
 import com.cepardov.cms.entity.Post;
+import com.cepardov.cms.entity.Role;
 import com.cepardov.cms.entity.User;
 import com.cepardov.cms.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional(rollbackFor = Exception.class)
     public void deleteById(Long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public void addRole(User user, Role role) {
     }
 
     @Override
