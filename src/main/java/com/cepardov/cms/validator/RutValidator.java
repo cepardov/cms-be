@@ -24,6 +24,10 @@ public class RutValidator implements ConstraintValidator<Rut, String> {
             return true;
         }
 
+        if(rutIn.equals("0000000000")) {
+            return true;
+        }
+
         boolean validacion = false;
 
         RutUtil rutUtil = new RutUtil();

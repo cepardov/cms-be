@@ -24,7 +24,7 @@ public class User implements Serializable {
     private Long id;
 
     @Rut
-    @Size(min = 9, max = 12, message = "El tamaño debe estar entre 9 y 12")
+    @Size(min = 8, max = 12, message = "El tamaño debe estar entre 9 y 12")
     @Column(nullable = false, unique = true)
     private String socialId;
 
