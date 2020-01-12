@@ -1,6 +1,5 @@
 package com.cepardov.cms.service;
 
-import com.cepardov.cms.entity.Post;
 import com.cepardov.cms.entity.Role;
 import com.cepardov.cms.entity.User;
 import com.cepardov.cms.repository.UserRepository;
@@ -12,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,12 +51,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public User save(User user) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return repository.save(user);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public User update(User user) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return repository.save(user);
     }
 

@@ -29,9 +29,6 @@ public class UserController {
     @Autowired
     private UserService service;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
     @GetMapping("/users")
     @TimeExecutionMeasuring
     public List<User> index(){
@@ -55,15 +52,15 @@ public class UserController {
         } catch (DataAccessException e) {
             response.put("message", "Error al realizar la consulta, intente más tarde");
             response.put("error", e.getLocalizedMessage());
-            return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         if(user == null) {
             response.put("message", "El usuario ID"+id+" no existe en la base de datos.");
-            return  new ResponseEntity(response, HttpStatus.NOT_FOUND);
+            return  new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity(user, HttpStatus.OK);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping("/users")
@@ -81,14 +78,14 @@ public class UserController {
         }
 
         try {
-            if(user.getPassword() == null) {
-                user.setPassword(passwordEncoder.encode(user.getSocialId()));
+            if(user.getPassword() == null || user.getPassword().isEmpty()) {
+                user.setPassword(user.getSocialId());
             }
             userSaved = service.save(user);
         } catch (DataAccessException e){
             response.put("message", "Error al guardar el usuario, intente más tarde");
             response.put("error", e.getLocalizedMessage());
-            return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         return new ResponseEntity<>(userSaved, HttpStatus.CREATED);
@@ -122,14 +119,14 @@ public class UserController {
             actualUser.setEnabled(user.getEnabled());
             System.out.println("Pass:"+user.getPassword());
             if(user.getPassword() != null){
-                actualUser.setPassword(passwordEncoder.encode(user.getPassword()));
+                actualUser.setPassword(user.getPassword());
             }
 
             userUpdated = service.update(actualUser);
         } catch (DataAccessException e) {
             response.put("message", "Error al guardar el usuario, intente más tarde");
             response.put("error", e.getLocalizedMessage());
-            return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(userUpdated, HttpStatus.OK);
     }
@@ -149,7 +146,7 @@ public class UserController {
         } catch (DataAccessException e) {
             response.put("message", "Error al eliminar el usuario, intente más tarde");
             response.put("error", e.getLocalizedMessage());
-            return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         response.put("message", "El usuario ha sido eliminado");
         return new ResponseEntity<>(response, HttpStatus.OK);
